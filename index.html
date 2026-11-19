@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nouhaila Makhzoumi – Site</title>
+<style>
+  :root {
+    --blue: #2F5597; --blue-dark: #1f3c6e; --accent: #0f9d8a; --ink: #1b1f2a; --muted: #5d6578;
+    --line: #e2e7f0; --soft: #f4f7fc; --white: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--white); line-height: 1.6; }
+  a { color: var(--blue); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  nav.top { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,0.96); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  nav.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+  nav.top .brand { font-weight: 700; color: var(--blue-dark); text-decoration: none; }
+  nav.top ul { list-style: none; display: flex; gap: 18px; margin: 0; padding: 0; flex-wrap: wrap; }
+  nav.top ul a { color: var(--muted); text-decoration: none; font-size: 0.93rem; }
+  nav.top ul a:hover { color: var(--blue); }
+
+  .hero { background: linear-gradient(135deg, #eef3fb 0%, #f7fbff 60%, #eaf8f5 100%); padding: 72px 0 64px; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); margin: 0 0 8px; letter-spacing: -0.8px; color: var(--blue-dark); }
+  .hero .role { font-size: 1.15rem; color: var(--muted); margin: 0 0 18px; font-style: italic; }
+  .hero .intro { max-width: 680px; font-size: 1.02rem; margin: 0 0 26px; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 0.95rem; margin-right: 10px; margin-bottom: 8px; }
+  .btn.primary { background: var(--blue); color: #fff; }
+  .btn.ghost { border: 1px solid var(--blue); color: var(--blue); background: #fff; }
+
+  section { padding: 64px 0 8px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.78rem; color: var(--accent); font-weight: 700; margin: 0 0 6px; }
+  h2 { font-size: 1.8rem; margin: 0 0 22px; color: var(--blue-dark); letter-spacing: -0.4px; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .filters button { font: inherit; font-size: 0.92rem; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; }
+  .filters button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .card { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .card[hidden] { display: none; }
+  .badge { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 10px; }
+  .badge.vision { background: #e6eefb; color: var(--blue-dark); }
+  .badge.llm { background: #e3f6f2; color: #0a6e61; }
+  .card h3 { margin: 0 0 4px; font-size: 1.08rem; line-height: 1.35; }
+  .card .stack { margin: 0 0 10px; font-size: 0.86rem; color: var(--muted); font-style: italic; }
+  .card ul { margin: 0; padding-left: 18px; font-size: 0.93rem; }
+  .card li { margin-bottom: 5px; }
+
+  .timeline { position: relative; padding-left: 22px; border-left: 2px solid var(--line); }
+  .job { position: relative; margin-bottom: 26px; }
+  .job::before { content: ""; position: absolute; left: -29px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--blue); border: 3px solid #fff; box-shadow: 0 0 0 1px var(--blue); }
+  .job .when { font-size: 0.86rem; color: var(--accent); font-weight: 700; margin: 0; }
+  .job h3 { margin: 2px 0 2px; font-size: 1.05rem; }
+  .job .place { margin: 0 0 6px; font-size: 0.9rem; color: var(--muted); font-style: italic; }
+  .job ul { margin: 0; padding-left: 18px; font-size: 0.95rem; }
+
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+  .skill { border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: var(--soft); }
+  .skill h3 { margin: 0 0 8px; font-size: 0.98rem; color: var(--blue-dark); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { font-size: 0.82rem; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; }
+
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .panel { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+  .panel h3 { margin: 0 0 10px; font-size: 1.05rem; color: var(--blue-dark); }
+  .panel p { margin: 0 0 6px; }
+
+  .contact { background: var(--blue-dark); color: #fff; padding: 56px 0; margin-top: 64px; }
+  .contact h2 { color: #fff; }
+  .contact p { margin: 0 0 8px; }
+  .contact a { color: #fff; }
+  .contact .btn.light { background: #fff; color: var(--blue-dark); }
+  footer { padding: 22px 0; font-size: 0.86rem; color: var(--muted); text-align: center; }
+
+  @media (max-width: 640px) {
+    nav.top ul { gap: 12px; }
+    nav.top ul a { font-size: 0.85rem; }
+    .hero { padding: 48px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="wrap">
+    <a class="brand" href="#accueil">N. Makhzoumi</a>
+    <ul>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#parcours">Parcours</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="accueil" class="hero">
+  <div class="wrap">
+    <h1>Nouhaila Makhzoumi</h1>
+    <p class="role">Étudiante en Master 2 Data &amp; Systèmes Intelligents / IA</p>
+    <p class="intro">Je conçois et j'expérimente des modèles de deep learning pour la vision par ordinateur, la modélisation de phénomènes physiques et les agents LLM, en cherchant le bon équilibre entre performance et coût de calcul.</p>
+    <a class="btn primary" href="#projets">Voir mes projets</a>
+    <a class="btn ghost" href="#contact">Me contacter</a>
+  </div>
+</header>
+
+<section id="projets">
+  <div class="wrap">
+    <p class="eyebrow">Réalisations</p>
+    <h2>Projets</h2>
+
+    <div class="filters" role="group" aria-label="Filtrer les projets">
+      <button type="button" data-filter="all" aria-pressed="true">Tous (8)</button>
+      <button type="button" data-filter="vision" aria-pressed="false">Vision &amp; simulation (5)</button>
+      <button type="button" data-filter="llm" aria-pressed="false">LLM &amp; agents (3)</button>
+    </div>
+
+    <div class="grid">
+
+      <article class="card" data-cat="vision">
+        <span class="badge vision">Vision &amp; simulation</span>
+        <h3>Modélisation de systèmes physiques par deep learning</h3>
+        <p class="stack">Python, PyTorch, CNN</p>
+        <ul>
+          <li>Surrogate modeling par réseaux convolutionnels (encodeur-décodeur) pour approximer des simulations numériques</li>
+          <li>Entraînement à partir de données de simulation ; expérimentation de plusieurs architectures CNN</li>
+          <li>Analyse comparative prédiction/simulation et étude des erreurs du modèle</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="vision">
+        <span class="badge vision">Vision &amp; simulation</span>
+        <h3>Classification d'images hyperspectrales de polymères par CNN</h3>
+        <p class="stack">MATLAB (Deep Learning Toolbox), CNN 2D, ACP, imagerie NIR</p>
+        <ul>
+          <li>Classification de 200 scans hyperspectraux de fragments plastiques en 4 classes, dont HDPE, PET et PP (répartition 140 / 30 / 30 pour l'entraînement, la validation et le test)</li>
+          <li>Réduction de 168 à 10 bandes spectrales par analyse en composantes principales (ACP), puis mise en forme 80×80×10 : moins de données à traiter par le réseau</li>
+          <li>Plan de 7 expériences sur la profondeur du réseau, le learning rate et la régularisation (dropout, weight decay) ; plusieurs configurations atteignent 100 % de précision sur le jeu de test de 30 scans, tandis que le learning rate élevé et la forte régularisation dégradent nettement les résultats</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="vision">
+        <span class="badge vision">Vision &amp; simulation</span>
+        <h3>Classification d'images hyperspectrales par deep learning</h3>
+        <p class="stack">Python, PyTorch, Transformer, Attention</p>
+        <ul>
+          <li>Architecture Transformer exploitant simultanément les informations spectrales et spatiales (self-attention, traitement par patchs, encodage positionnel)</li>
+          <li>Apprentissage de représentations discriminantes pour la classification fine des données hyperspectrales</li>
+          <li>Expérimentation, transfer/fine-tuning et évaluation des performances sur plusieurs jeux de données</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="vision">
+        <span class="badge vision">Vision &amp; simulation</span>
+        <h3>Analyse et classification automatique des microplastiques</h3>
+        <p class="stack">Projet du module Vision par Ordinateur · Python, PyTorch, CNN, Computer Vision, Streamlit</p>
+        <ul>
+          <li>Prétraitement et normalisation des images, préparation des données d'entraînement</li>
+          <li>Conception et entraînement d'un CNN (convolution, pooling, fonctions d'activation, backpropagation) sous PyTorch, puis évaluation sur données de test</li>
+          <li>Intégration du modèle dans une interface Streamlit pour la prédiction sur de nouvelles images</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="vision">
+        <span class="badge vision">Vision &amp; simulation</span>
+        <h3>Apprentissage sur graphes pour l'analyse de trajectoires spatio-temporelles</h3>
+        <p class="stack">Python, PyTorch, PyTorch Geometric, GAT, clustering non supervisé</p>
+        <ul>
+          <li>Modélisation de trajectoires spatio-temporelles sous forme de graphes : sommets = états successifs (position, vitesse, intensité), arêtes = relations spatiales et temporelles</li>
+          <li>Apprentissage de représentations de trajectoires avec un Graph Attention Network (GAT) sous PyTorch Geometric</li>
+          <li>Clustering non supervisé (k-means, UMAP) des représentations pour identifier des comportements distincts ; interprétabilité et comparaison avec une approche classique</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="llm">
+        <span class="badge llm">LLM &amp; agents</span>
+        <h3>Développement d'un framework multi-agents IA avec LangGraph</h3>
+        <p class="stack">Python, LangChain, LangGraph, Streamlit, LLMs, OpenTelemetry, LangFuse, API REST</p>
+        <ul>
+          <li>Conception d'une application web pour créer, configurer et orchestrer des agents d'IA, avec une architecture modulaire LangChain / LangGraph pour gérer des workflows multi-agents</li>
+          <li>Intégration de différents LLMs et d'outils externes ; interface Streamlit pour piloter les agents et visualiser leurs exécutions</li>
+          <li>Mise en place de la supervision, de la traçabilité (OpenTelemetry, LangFuse) et de l'évaluation des performances des agents</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="llm">
+        <span class="badge llm">LLM &amp; agents</span>
+        <h3>Multi-Agent Omni LangGraph Executor (MOLE)</h3>
+        <p class="stack">Python, LangChain, LangGraph, Streamlit, LLMs, RAG, FAISS, LangFuse, Git</p>
+        <ul>
+          <li>Framework multi-agents décomposant et exécutant des tâches complexes grâce à la collaboration d'agents IA spécialisés ; agent superviseur coordonnant les agents, leurs interactions et leurs workflows</li>
+          <li>Architecture modulaire LangChain / LangGraph facilitant l'intégration et le remplacement des LLMs, des outils et des rôles des agents</li>
+          <li>Interface web Streamlit pour configurer les scénarios, piloter les agents et visualiser les résultats</li>
+          <li>Traitement documentaire et RAG avec FAISS ; suivi, traçabilité et monitoring des opérations LLM avec LangFuse</li>
+        </ul>
+      </article>
+
+      <article class="card" data-cat="llm">
+        <span class="badge llm">LLM &amp; agents</span>
+        <h3>Plateforme intelligente de maintenance prédictive</h3>
+        <p class="stack">Python, XGBoost, SHAP, FastAPI, Docker, React, PostgreSQL</p>
+        <ul>
+          <li>Pipeline de données industrielles et entraînement d'un modèle XGBoost (feature engineering, gradient boosting)</li>
+          <li>Analyse des facteurs de prédiction avec SHAP ; exposition du modèle via une API FastAPI</li>
+          <li>Architecture conteneurisée avec Docker (PostgreSQL) et interface web React pour la visualisation des résultats</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="parcours">
+  <div class="wrap">
+    <p class="eyebrow">Expérience</p>
+    <h2>Parcours</h2>
+    <div class="timeline">
+      <div class="job">
+        <p class="when">Juillet 2026 – Octobre 2026</p>
+        <h3>Stagiaire en laboratoire de recherche – Classification de minéraux</h3>
+        <p class="place">L3IA – Laboratoire d'Informatique, Innovation et Intelligence Artificielle, Fès</p>
+        <ul>
+          <li>Classification de minéraux sur images microscopiques : prétraitement, augmentation de données, CNN</li>
+          <li>Transfer learning et fine-tuning avec MobileNetV2 ; évaluation et comparaison des performances, analyse des erreurs</li>
+        </ul>
+      </div>
+      <div class="job">
+        <p class="when">Juin 2025 – Août 2025</p>
+        <h3>Stagiaire Data Engineering &amp; IA – OCP</h3>
+        <p class="place">El Jadida, Maroc</p>
+        <ul>
+          <li>Chaîne ETL pour collecter, transformer et centraliser les données industrielles</li>
+          <li>Extraction d'informations par OCR/IA et exposition des données via une API sécurisée</li>
+        </ul>
+      </div>
+      <div class="job">
+        <p class="when">Juillet 2024 – Août 2024</p>
+        <h3>Stagiaire Développeuse Web – OCP</h3>
+        <p class="place">El Jadida, Maroc</p>
+        <ul>
+          <li>API REST avec Symfony 7 / PHP 8.2 et MySQL ; sécurisation des accès et documentation technique</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competences">
+  <div class="wrap">
+    <p class="eyebrow">Savoir-faire</p>
+    <h2>Compétences</h2>
+    <div class="skills">
+      <div class="skill">
+        <h3>Deep learning &amp; vision</h3>
+        <div class="chips"><span>PyTorch</span><span>MATLAB</span><span>CNN</span><span>Transformers</span><span>Transfer learning</span><span>Encodeur-décodeur</span><span>Augmentation de données</span></div>
+      </div>
+      <div class="skill">
+        <h3>Modélisation &amp; expérimentation</h3>
+        <div class="chips"><span>Plans d'expérimentation</span><span>Surrogate modeling</span><span>Analyse des erreurs</span><span>ACP</span><span>Estimation d'incertitude</span><span>Réseaux bayésiens</span></div>
+      </div>
+      <div class="skill">
+        <h3>Agents &amp; LLM</h3>
+        <div class="chips"><span>LangChain</span><span>LangGraph</span><span>RAG (FAISS)</span><span>Orchestration multi-agents</span><span>LangFuse</span><span>OpenTelemetry</span></div>
+      </div>
+      <div class="skill">
+        <h3>Machine learning</h3>
+        <div class="chips"><span>Scikit-learn</span><span>XGBoost</span><span>SHAP</span><span>Feature engineering</span><span>Optimisation d'hyperparamètres</span></div>
+      </div>
+      <div class="skill">
+        <h3>Outils &amp; déploiement</h3>
+        <div class="chips"><span>Docker</span><span>FastAPI</span><span>Streamlit</span><span>React</span><span>Git / GitHub</span></div>
+      </div>
+      <div class="skill">
+        <h3>Data &amp; programmation</h3>
+        <div class="chips"><span>Python</span><span>SQL</span><span>Pandas</span><span>NumPy</span><span>Matplotlib</span><span>HDF5</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap two">
+    <div class="panel">
+      <h3>Formation</h3>
+      <p><strong>Master en Big Data et Intelligence Artificielle</strong> · 2026 – en cours</p>
+      <p><strong>Cycle ingénieur</strong> – <em>École Nationale des Sciences Appliquées (ENSA)</em></p>
+      <p><strong>Baccalauréat</strong> – Sciences Mathématiques (option B)</p>
+    </div>
+    <div class="panel">
+      <h3>Langues</h3>
+      <p><strong>Français :</strong> C1</p>
+      <p><strong>Anglais :</strong> bon niveau</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <p class="eyebrow" style="color:#7fe0cf">Contact</p>
+    <h2>Parlons-en</h2>
+    <p>Je recherche un stage de fin d'études (PFE) à partir de février/mars 2027, pour 5 à 6 mois.</p>
+    <p>Téléphone : <a href="tel:+212722835724">07 22 83 57 24</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© Nouhaila Makhzoumi · Site personnel</div>
+</footer>
+
+<script>
+  (function () {
+    var buttons = document.querySelectorAll('.filters button');
+    var cards = document.querySelectorAll('.grid .card');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var f = btn.getAttribute('data-filter');
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+        cards.forEach(function (c) {
+          c.hidden = !(f === 'all' || c.getAttribute('data-cat') === f);
+        });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
